@@ -2,7 +2,7 @@
 
 ## Project: Component Based UI
 
-### Author: Reece Renninger
+### Author: Hayden Cooper
 
 ### Problem Domain  
 
@@ -10,8 +10,8 @@ Today, we begin the first of a 4-Phase build of the RESTy application, written i
 
 ### Links and Resources
 
-- [GitHub Actions ci/cd]()
-- [front-end application]() (deployed on sandbox)
+- [GitHub Actions ci/cd](https://github.com/Hcooper23/resty/actions)
+- [front-end application](https://codesandbox.io/p/github/Hcooper23/resty/base?workspaceId=d6b0a7b3-fc47-4e4d-b1fa-ce55109e7d9e) (deployed on sandbox)
 
 ### Collaborators
 
@@ -40,4 +40,4 @@ N/A
 
 #### UML
 
-![Alt text]()
+![UML](./Screenshot%202023-06-20%20at%208.51.46%20PM.png)
