@@ -1,13 +1,28 @@
-import React from 'react';
+// import React, { useState, useEffect } from 'react';
+import ReactJson from 'react-json-pretty';
+import JSONPrettyMon from 'react-json-pretty/dist/monikai';
 import './Results.scss';
 
-function Results (props) {
+const Results = (props) => {
 
-    return (
-      <section>
-        <pre>{props.data ? JSON.stringify(props.data, undefined, 2) : null}</pre>
-      </section>
-    );
-  }
+  // const [data, setData] = useState(props.data);
+
+  // useEffect(() => {
+  //   setData(props.data);
+  // }, [props.data]);
+
+  return (
+    <section>
+      {props.loading ? 
+      <p>Loading.....</p> :
+
+      <p>
+        {props.data ? <ReactJson data={props.data} theme={JSONPrettyMon}></ReactJson> : null}
+      </p>
+        
+        }
+    </section>
+  );
+};
 
 export default Results;
