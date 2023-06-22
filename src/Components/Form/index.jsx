@@ -1,35 +1,66 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import './Form.scss';
 
 function Form(props) {
+  const [url, setUrl] = useState('');
+  const [method, setMethod] = useState('get');
 
-  let handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const formData = {
-      method:'GET',
-      url: 'https://pokeapi.co/api/v2/pokemon',
+      method,
+      url,
     };
     props.handleApiCall(formData);
-  }
+  };
 
-    return (
-      <>
-        <form onSubmit={handleSubmit}>
-          <label >
-            <span>URL: </span>
-            <input name='url' type='text' />
-            <button type="submit">GO!</button>
-          </label>
-          <label className="methods">
-            <span id="get">GET</span>
-            <span id="post">POST</span>
-            <span id="put">PUT</span>
-            <span id="delete">DELETE</span>
-          </label>
-        </form>
-      </>
-    );
-  }
+  const handleUrlChange = (e) => {
+    setUrl(e.target.value);
+  };
+
+  const handleMethodChange = (e) => {
+    setMethod(e.target.id.toUpperCase());
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        <span>URL: </span>
+        <input name="url" type="text" value={url} onChange={handleUrlChange} />
+        <button type="submit">GO!</button>
+      </label>
+      <label className="methods">
+        <span
+          id="get"
+          className={method === 'GET' ? 'active' : ''}
+          onClick={handleMethodChange}
+        >
+          GET
+        </span>
+        <span
+          id="post"
+          className={method === 'POST' ? 'active' : ''}
+          onClick={handleMethodChange}
+        >
+          POST
+        </span>
+        <span
+          id="put"
+          className={method === 'PUT' ? 'active' : ''}
+          onClick={handleMethodChange}
+        >
+          PUT
+        </span>
+        <span
+          id="delete"
+          className={method === 'DELETE' ? 'active' : ''}
+          onClick={handleMethodChange}
+        >
+          DELETE
+        </span>
+      </label>
+    </form>
+  );
+}
 
 export default Form;
