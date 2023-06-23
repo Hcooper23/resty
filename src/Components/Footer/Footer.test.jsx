@@ -8,4 +8,10 @@ describe('Footer Component', () => {
     const footerElement = screen.getByTestId('test-footer');
     expect(footerElement).toBeInTheDocument();
   });
+
+  test('displays the correct copyright text', () => {
+    render(<Footer />);
+    const copyrightText = screen.getByText(/Hayden Cooper 2023/i);
+    expect(copyrightText).toBeInTheDocument();
+  });
 });
