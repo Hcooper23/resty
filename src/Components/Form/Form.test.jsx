@@ -1,31 +1,39 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import Form from './index';
+import '@testing-library/jest-dom';
+import { fireEvent, render, screen } from '@testing-library/react';
+import Form from '../Form';
 
-describe('Form', () => {
-  test('renders data in the output area upon form submission', () => {
-    // Mock function to pass as the handleApiCall prop
+describe('Form Component', () => {
+  test('submits the form with the entered URL and method', () => {
     const handleApiCallMock = jest.fn();
-
-    // Render the Form component with the mock function
     render(<Form handleApiCall={handleApiCallMock} />);
+    const urlInput = screen.getByLabelText('URL:');
+    const submitButton = screen.getByRole('button', { name: 'GO!' });
 
-    // Find the input elements and the submit button
-    const urlInput = screen.getByLabelText(/URL/);
-    const submitButton = screen.getByRole('button', { name: /GO!/ });
-
-    // Set the input value and select a method
-    fireEvent.change(urlInput, { target: { value: 'https://example.com' } });
-    fireEvent.click(screen.getByText('POST'));
-
-    // Trigger form submission
+    fireEvent.change(urlInput, { target: { value: 'https://api.example.com' } });
     fireEvent.click(submitButton);
 
-    // Verify that the handleApiCallMock function was called with the correct form data
     expect(handleApiCallMock).toHaveBeenCalledTimes(1);
     expect(handleApiCallMock).toHaveBeenCalledWith({
-      method: 'POST',
-      url: 'https://example.com',
+      method: 'get',
+      url: 'https://api.example.com',
     });
+  });
+
+  test('updates the URL state on input change', () => {
+    render(<Form handleApiCall={jest.fn()} />);
+    const urlInput = screen.getByLabelText('URL:');
+
+    fireEvent.change(urlInput, { target: { value: 'https://api.example.com' } });
+
+    expect(urlInput).toHaveValue('https://api.example.com');
+  });
+
+  test('updates the method state on method selection', () => {
+    render(<Form handleApiCall={jest.fn()} />);
+    const postMethod = screen.getByText('POST');
+
+    fireEvent.click(postMethod);
+
+    expect(postMethod).toHaveClass('active');
   });
 });

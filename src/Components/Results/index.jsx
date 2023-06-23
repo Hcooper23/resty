@@ -9,22 +9,20 @@ const Results = (props) => {
       {props.loading ? (
         <p>Loading.....</p>
       ) : (
-        <p>
+        <div> {/* Wrap the content in a div */}
           {props.data ? (
             <ReactJson
               data={props.data}
               theme={JSONPrettyMon}
               replacer={(key, value) => {
-                // Check if the key is 'count', 'pagination', or 'results'
                 if (key === 'count' || key === 'pagination' || key === 'results') {
-                  // Format the JSON value with indentation for better readability
                   return JSON.stringify(value, null, 2);
                 }
                 return value;
               }}
             />
           ) : null}
-        </p>
+        </div>
       )}
     </section>
   );
