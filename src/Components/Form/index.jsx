@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Form.scss';
 
-function Form(props) {
+const Form = (props) => {
   const [url, setUrl] = useState('');
   const [method, setMethod] = useState('get');
 
@@ -19,11 +19,11 @@ function Form(props) {
   };
 
   const handleMethodChange = (e) => {
-    setMethod(e.target.id.toLowerCase());
+    setMethod(e.target.id.toUpperCase());
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="request-form" onSubmit={handleSubmit}>
       <label>
         <span>URL: </span>
         <input name="url" type="text" value={url} onChange={handleUrlChange} />
@@ -32,28 +32,28 @@ function Form(props) {
       <label className="methods">
         <span
           id="get"
-          className={method === 'get' ? 'active' : ''}
+          className={method === 'GET' ? 'active' : ''}
           onClick={handleMethodChange}
         >
           GET
         </span>
         <span
           id="post"
-          className={method === 'post' ? 'active' : ''}
+          className={method === 'POST' ? 'active' : ''}
           onClick={handleMethodChange}
         >
           POST
         </span>
         <span
           id="put"
-          className={method === 'put' ? 'active' : ''}
+          className={method === 'PUT' ? 'active' : ''}
           onClick={handleMethodChange}
         >
           PUT
         </span>
         <span
           id="delete"
-          className={method === 'delete' ? 'active' : ''}
+          className={method === 'DELETE' ? 'active' : ''}
           onClick={handleMethodChange}
         >
           DELETE
@@ -61,6 +61,6 @@ function Form(props) {
       </label>
     </form>
   );
-}
+};
 
 export default Form;

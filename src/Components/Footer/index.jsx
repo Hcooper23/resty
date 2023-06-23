@@ -1,12 +1,12 @@
 import React from 'react';
 import './Footer.scss';
 
-function Footer () {
-  return(
-    
-      <footer data-testid='test-footer'>&copy; Hayden Cooper 2023</footer>
-    
-  )
-}
+const Footer = () => {
+  return (
+    <footer>
+      <span>&copy; Hayden Cooper 2023</span>
+    </footer>
+  );
+};
 
 export default Footer;

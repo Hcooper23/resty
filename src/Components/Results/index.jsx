@@ -5,11 +5,11 @@ import './Results.scss';
 
 const Results = (props) => {
   return (
-    <section>
+    <section className="results">
       {props.loading ? (
         <p>Loading.....</p>
       ) : (
-        <div> {/* Wrap the content in a div */}
+        <div className="content">
           {props.data ? (
             <ReactJson
               data={props.data}
