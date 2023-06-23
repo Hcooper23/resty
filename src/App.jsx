@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useReducer } from 'react';
-import Header from './Components/Header';
-import Footer from './Components/Footer';
-import Form from './Components/Form';
-import Results from './Components/Results';
+import React, { useReducer, useEffect } from 'react';
+import Header from './Components/Header/index';
+import Footer from './Components/Footer/index';
+import Form from './Components/Form/index';
+import Results from './Components/Results/index';
 import './App.scss';
 
 const initialState = {
@@ -29,6 +29,7 @@ const reducer = (state, action) => {
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const { data, requestParams, loading, apiHistory } = state;
 
   const callApi = async (requestParams) => {
     try {
@@ -57,7 +58,6 @@ const App = () => {
       const apiCall = {
         url: requestParams.url,
         method: requestParams.method,
-        headers: response.headers,
         result: responseData,
       };
       dispatch({ type: 'ADD_API_HISTORY', payload: apiCall });
@@ -69,27 +69,27 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (Object.keys(state.requestParams).length !== 0) {
-      callApi(state.requestParams);
+    if (Object.keys(requestParams).length !== 0) {
+      callApi(requestParams);
     }
-  }, [state.requestParams]);
+  }, [requestParams]);
 
   return (
     <>
       <Header />
-      <div>Request Method: {state.requestParams.method}</div>
-      <div>URL: {state.requestParams.url}</div>
-      <Form handleApiCall={(requestData) => dispatch({ type: 'SET_REQUEST_PARAMS', payload: requestData })} />
-      <Results data={state.data} loading={state.loading} />
+      <div>
+        <span>Request Method: {requestParams.method}</span>
+        <span>URL: {requestParams.url}</span>
+      </div>
+      <Form handleApiCall={(formData) => dispatch({ type: 'SET_REQUEST_PARAMS', payload: formData })} />
+      <Results data={data} loading={loading} />
       <div>
         <h2>Previous API Calls</h2>
-        {state.apiHistory.map((apiCall, index) => (
-          <div key={index}>
+        {apiHistory.map((apiCall, index) => (
+          <div key={index} onClick={() => dispatch({ type: 'SET_DATA', payload: apiCall.result })}>
             <h3>API Call {index + 1}</h3>
             <div>URL: {apiCall.url}</div>
             <div>Method: {apiCall.method}</div>
-            <div>Headers: {JSON.stringify(apiCall.headers, null, 2)}</div>
-            <div>Result: {JSON.stringify(apiCall.result, null, 2)}</div>
           </div>
         ))}
       </div>
