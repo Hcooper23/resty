@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import Form from './Components/Form';
@@ -13,27 +13,43 @@ const App = () => {
   const callApi = async (requestParams) => {
     try {
       setLoading(true);
-      const response = await fetch(requestParams.url);
+      const requestOptions = {
+        method: requestParams.method,
+      };
+
+      if (requestParams.method !== 'GET') {
+        requestOptions.headers = { 'Content-Type': 'application/json' };
+        requestOptions.body = JSON.stringify(requestParams.body);
+      }
+
+      const response = await fetch(requestParams.url, requestOptions);
+
       if (!response.ok) {
         throw new Error('Request failed');
       }
+
       const responseData = await response.json();
       setData(responseData);
-      setRequestParams(requestParams);
       setLoading(false);
     } catch (error) {
       console.error(error);
       setData(null);
-      setRequestParams(requestParams);
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (Object.keys(requestParams).length !== 0) {
+      callApi(requestParams);
+    }
+  }, [requestParams]);
 
   return (
     <>
       <Header />
       <div>Request Method: {requestParams.method}</div>
       <div>URL: {requestParams.url}</div>
-      <Form handleApiCall={callApi} />
+      <Form handleApiCall={setRequestParams} />
       <Results data={data} loading={loading} />
       <Footer />
     </>

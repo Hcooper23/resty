@@ -19,7 +19,7 @@ function Form(props) {
   };
 
   const handleMethodChange = (e) => {
-    setMethod(e.target.id.toUpperCase());
+    setMethod(e.target.id.toLowerCase());
   };
 
   return (
@@ -32,28 +32,28 @@ function Form(props) {
       <label className="methods">
         <span
           id="get"
-          className={method === 'GET' ? 'active' : ''}
+          className={method === 'get' ? 'active' : ''}
           onClick={handleMethodChange}
         >
           GET
         </span>
         <span
           id="post"
-          className={method === 'POST' ? 'active' : ''}
+          className={method === 'post' ? 'active' : ''}
           onClick={handleMethodChange}
         >
           POST
         </span>
         <span
           id="put"
-          className={method === 'PUT' ? 'active' : ''}
+          className={method === 'put' ? 'active' : ''}
           onClick={handleMethodChange}
         >
           PUT
         </span>
         <span
           id="delete"
-          className={method === 'DELETE' ? 'active' : ''}
+          className={method === 'delete' ? 'active' : ''}
           onClick={handleMethodChange}
         >
           DELETE
